@@ -52,6 +52,9 @@ class SimpleGallery<T extends Object> extends StatefulWidget {
   /// Specifies additional styling or decorations for item details.
   final DetailDecoration<T>? detailDecoration;
 
+  /// The axis along which the scroll view scrolls. Default is [Axis.vertical].
+  final Axis axis;
+
   const SimpleGallery({
     super.key,
     required this.items,
@@ -64,6 +67,7 @@ class SimpleGallery<T extends Object> extends StatefulWidget {
     this.childAspectRatio = 1.0,
     this.padding = const EdgeInsets.all(4.0),
     this.detailDecoration,
+    this.axis = Axis.vertical,
   });
 
   @override
@@ -104,7 +108,7 @@ class _SimpleGalleryState<T extends Object> extends State<SimpleGallery<T>> {
       builder: (context, constraints) {
         _scrollOffsetCalculator ??= GridViewScrollOffsetCalculator(
           viewport: constraints.biggest,
-          scrollDirection: Axis.vertical,
+          scrollDirection: widget.axis,
           padding: widget.padding,
           crossAxisCount: widget.crossAxisCount,
           crossAxisSpacing: widget.crossAxisSpacing,
@@ -114,7 +118,7 @@ class _SimpleGalleryState<T extends Object> extends State<SimpleGallery<T>> {
 
         return GridView.builder(
           controller: _controller,
-          scrollDirection: Axis.vertical,
+          scrollDirection: widget.axis,
           padding: widget.padding,
           itemCount: widget.items.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
